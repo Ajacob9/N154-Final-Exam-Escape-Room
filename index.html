@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Escape the Bennett House · NURSE 154 Review</title>
+<style>
+  :root {
+    --ink: #1f2a30; --muted: #5b6770; --line: #dfe3e6; --bg: #f6f3ee; --card: #ffffff;
+    --teal: #1d5c63; --teal-soft: #e3efef; --gold: #b7791f; --gold-soft: #fbf1df;
+    --good: #2f6b3a; --good-soft: #e6f2e7; --bad: #a33a2c; --bad-soft: #f8e7e4;
+    --radius: 12px;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+    font: 16px/1.55 "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 28px 18px 64px; }
+  header.hero { background: var(--teal); color: #fff; border-radius: var(--radius); padding: 28px 28px 24px; margin-bottom: 20px; }
+  .hero .eyebrow { text-transform: uppercase; letter-spacing: .12em; font-size: 12px; opacity: .8; margin: 0 0 6px; }
+  .hero h1 { margin: 0 0 8px; font-size: 32px; line-height: 1.15; }
+  .hero p { margin: 0; max-width: 640px; opacity: .95; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px 24px; margin-bottom: 18px; }
+  h2 { font-size: 22px; margin: 0 0 6px; }
+  h3 { font-size: 17px; margin: 18px 0 8px; }
+  table { width: 100%; border-collapse: collapse; font-size: 15px; }
+  th, td { text-align: left; vertical-align: top; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+  th { font-size: 13px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+  .how { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; margin-top: 8px; }
+  .how div { background: var(--teal-soft); border-radius: 10px; padding: 10px 12px; font-size: 14px; }
+  .how b { display: block; color: var(--teal); margin-bottom: 2px; }
+  .doors { display: flex; gap: 8px; flex-wrap: wrap; margin: 4px 0 18px; }
+  .door { flex: 1 1 110px; border-radius: 10px; padding: 10px 8px; text-align: center; font-size: 13px; border: 1px solid var(--line); background: #fff; color: var(--muted); cursor: default; }
+  .door .ic { font-size: 22px; display: block; }
+  .door.open { border-color: var(--teal); color: var(--ink); cursor: pointer; }
+  .door.done { background: var(--good-soft); border-color: #b9d8bd; color: var(--good); cursor: pointer; }
+  .door.current { box-shadow: 0 0 0 3px var(--teal-soft); border-color: var(--teal); }
+  .scene { background: var(--gold-soft); border-left: 4px solid var(--gold); padding: 12px 14px; border-radius: 8px; font-style: italic; margin: 10px 0 6px; }
+  .puzzle { border-top: 1px solid var(--line); padding-top: 14px; margin-top: 16px; }
+  .tag { display: inline-block; font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--teal); background: var(--teal-soft); padding: 2px 8px; border-radius: 999px; margin-right: 6px; }
+  .pid { font-weight: 700; }
+  ol.opts { list-style: none; padding: 0; margin: 10px 0 0; display: grid; gap: 6px; }
+  ol.opts li { display: flex; gap: 10px; align-items: flex-start; padding: 8px 10px; border: 1px solid var(--line); border-radius: 8px; cursor: pointer; user-select: none; }
+  ol.opts li .num { flex: 0 0 26px; height: 26px; border-radius: 50%; background: #eef1f3; display: grid; place-items: center; font-weight: 700; font-size: 13px; }
+  ol.opts li.marked { border-color: var(--teal); background: var(--teal-soft); }
+  ol.opts li.marked .num { background: var(--teal); color: #fff; }
+  .keyline { font-size: 14px; background: #f4f6f7; border-radius: 8px; padding: 8px 10px; margin: 8px 0; }
+  .rows td.inp { width: 72px; }
+  .rows input { width: 56px; padding: 6px; border: 1px solid var(--line); border-radius: 6px; font: inherit; text-align: center; }
+  .scratch { font-size: 13px; color: var(--muted); margin-top: 6px; }
+  .lock { margin-top: 20px; padding: 16px; border-radius: 10px; background: #f4f6f7; }
+  .lock label { font-weight: 600; display: block; margin-bottom: 6px; }
+  .lock .row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .lock input { flex: 1 1 220px; font: 600 18px/1 ui-monospace, Menlo, Consolas, monospace; padding: 10px 12px; border: 1px solid #c9d0d4; border-radius: 8px; letter-spacing: .08em; }
+  button { font: 600 15px/1 inherit; padding: 11px 16px; border-radius: 8px; border: 1px solid var(--teal); background: var(--teal); color: #fff; cursor: pointer; }
+  button.ghost { background: #fff; color: var(--teal); }
+  button:focus-visible, input:focus-visible, li:focus-visible, .door:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+  .msg { margin-top: 10px; padding: 10px 12px; border-radius: 8px; font-weight: 600; }
+  .msg.bad { background: var(--bad-soft); color: var(--bad); }
+  .msg.good { background: var(--good-soft); color: var(--good); }
+  .hint { margin-top: 10px; padding: 10px 12px; border-radius: 8px; background: var(--gold-soft); font-size: 15px; }
+  details.debrief { margin-top: 14px; border: 1px solid #b9d8bd; background: var(--good-soft); border-radius: 10px; padding: 10px 14px; }
+  details.debrief summary { cursor: pointer; font-weight: 700; color: var(--good); }
+  details.debrief table { margin-top: 8px; background: #fff; border-radius: 8px; }
+  .final { text-align: center; }
+  .howto { margin: 4px 0 0; font-size: 14px; color: var(--teal); background: #f1f7f7; border-radius: 6px; padding: 6px 10px; }
+  .letter { display: inline-block; margin-left: 6px; min-width: 30px; text-align: center; padding: 2px 8px; border-radius: 6px; background: var(--good); color: #fff; font-size: 18px; }
+  .ring { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin: 14px 0 6px; }
+  .ring .slot { width: 64px; height: 74px; border: 2px solid var(--teal); border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; font: 700 28px/1 ui-monospace, Menlo, Consolas, monospace; color: var(--teal); background: var(--teal-soft); }
+  .ring .slot small { font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif; font-size: 11px; font-weight: 400; line-height: 1.2; color: var(--muted); margin-top: 6px; }
+  .final .big { font-size: 48px; }
+  .stamp { display: inline-block; margin-top: 10px; padding: 8px 14px; border: 2px dashed var(--good); border-radius: 10px; color: var(--good); font-weight: 700; }
+  .footer { font-size: 13px; color: var(--muted); text-align: center; margin-top: 28px; }
+  .reset { background: none; border: none; color: var(--muted); text-decoration: underline; padding: 0; font-weight: 400; font-size: 13px; }
+  @media (max-width: 560px) { .hero h1 { font-size: 26px; } .card { padding: 18px; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <p class="eyebrow" id="sub"></p>
+    <h1 id="title"></h1>
+    <p id="mission"></p>
+  </header>
+
+  <section class="card" aria-labelledby="hh">
+    <h2 id="hh">The Bennett household</h2>
+    <table><thead><tr><th>Person</th><th>Age</th><th>What's going on</th></tr></thead><tbody id="family"></tbody></table>
+    <h3>How to build a code</h3>
+    <div class="how" id="how"></div>
+    <p class="scratch">Tip: click an answer to mark it while you think. Marks are just scratch paper; only the code you enter counts. Try each puzzle without your notes first.</p>
+  </section>
+
+  <nav class="doors" id="doors" aria-label="Rooms"></nav>
+  <main id="room"></main>
+
+  <p class="footer">NURSE 154 · Olympic College Nursing · Final exam review activity &nbsp;·&nbsp; <button class="reset" id="reset" type="button">Start over</button></p>
+</div>
+
+<script>
+const DATA = {"intro":{"title":"Escape the Bennett House","sub":"NURSE 154 Final Exam Review","mission":"You are the home health and hospice nurse visiting a very full household. Every room holds a family member who needs you. Solve all the puzzles in a room to build its code, then enter the code to unlock the next room. Each unlocked room gives you a key letter and the rationales for the puzzles you just solved. Collect all six letters to open the final door.","family":[["Rose Bennett","81","End-stage COPD. Started hospice care at home last week. Has a valid POLST: Do Not Attempt Resuscitation, comfort-focused treatment."],["Lisa Bennett","52","Rose's daughter and main caregiver. A city bus driver who cut her hours to care for her mother."],["Marcus Bennett","15","Lisa's son, a high school sophomore."],["Jenna Torres","29","Lisa's younger sister. Recently separated; moved in last month with her two children. Works night shifts at a warehouse."],["Ava Torres","3","Jenna's daughter."],["Leo Torres","4 months","Jenna's son."]],"how":[["Select all = ADD","Add the numbers of every correct answer. If 2, 3, and 6 are correct, write 11."],["Choose one = ONE number","Write the number of the single best answer."],["Put in order / Match each row = DON'T ADD","Write the numbers side by side in the order asked, with no spaces. Example: 3142."],["Room code + key letter","Enter the puzzle answers in order, separated by dashes (example: 11-3-3142). Each room you unlock gives you a key letter for the final door."]]},"rooms":[{"n":1,"title":"The Nursery","hash":2719719964470918,"content":{"n":1,"title":"The Nursery","icon":"🧸","scene":"Jenna just got home from a night shift. Ava is playing on the floor while Leo naps. Jenna tells you Leo hasn't had any vaccines since his 2-month visit, and that Ava has “gone backward” since the move.","hint":"In 1A, three of the six skills are expected at age 3. Shoelaces, reading, and games with complex rules come later. In 1C, ask: is this something that keeps Leo from getting vaccinated?","puzzles":[{"id":"1A","kind":"Select all","prompt":"Jenna describes things Ava (3 years) does. Which are expected for her age?","options":["Pedals a tricycle","Plays board games with complex rules and keeps score","Says her doll is “sad” because it was left out in the rain","Reads short sentences out loud","Copies a circle with a crayon","Ties her own shoelaces"]},{"id":"1B","kind":"Choose one","prompt":"Ava was fully toilet trained, but since the move and Leo's birth she wets the bed and asks for a bottle. Jenna says, “I tell her she's acting like a baby.” What is the nurse's best guidance?","options":["“Put Ava back in diapers full time until she asks for underwear again.”","“Going backward is common when a young child is stressed. Stay calm, avoid shaming her, and plan a little one-on-one time with her each day.”","“Use a sticker chart, and take away a favorite toy after each accident.”","“Remind Ava that big sisters don't use bottles.”"]},{"id":"1C","kind":"Select all","prompt":"Which of Jenna's statements describe barriers to Leo's vaccinations that the nurse should address?","options":["“Leo's doctor says he's growing really well.”","“I work nights, so I'm asleep during the clinic's hours.”","“Someone in my parents' group online said the 4-month shots cause SIDS.”","“Our insurance covers all of his vaccines.”","“Ava is up to date on all of her shots.”","“I lost his shot record when we moved.”"]}],"codeShape":"_-_-__"},"plain":true,"key":"BpIDIJnwaf/FleUE1eDFNgDjMJI/sPbLtfIGuuspZ/+5Eg4F7VLt8lqGxcx8oLOkuNSztwu7A08+HM5CFoASrvLhmCI/TFbTUoLlbecTFQsZsmh6y2k++5itPGyVnuSPIB5CHNu1HxGnWycDt6+5wZtUM1FLZecqEeio/aA/TOPIIlTjHNKy0oE+aCwNZ92sLTxhTDe2FVFiyWCTcXcQC8mVAQQpz+lqYAwSPXe6mi3bjLd1eL7j1eTLqYzj8nxFdNa7NOnhk9adnh2IQAEyBbvoaMoqqjjBMbh4w2Xw1rvi1SlV4czYhlze+Lz0F9ly6Or0t+ce9MN2ttRLEl9CbXZAwuWepxLhREZstay20KSchfJfMoLxXW3j0AYBAxNn8W4WM1Ngpor0qxaUvoQhgpULIi6+lIFmRU98nm3QyEFNfXu2y/sLPFjeLEX5JcVZNZMVIOtIe2vURjPA8tkSVHjTMRMZNyfXotsqMlerhujm/D4Y1yVDwIp+6vtB6+Im+eS4l8H6PQ/kdco9VBkY04JQ+cTEew4XYoeOAobmFgGrs5qb2Jh7HamNdEDDgdn302wvKFYjtAMcI8ETjQ/lth4BCWqwWqaW7oNSbzm9s53lS7DAz36TqsbWOh/jyT5ypN4XFgfnRtTb0y6pCxnYk7DAR7Mk2tOf2pQS85Nt1F2OpjdVOzh0Kjmy0xvWqPh+2L9zZLnxT5jKhd0GamWc5UKH6opTLaojjIYTU0KRrlif3C2uqjqOHjV3AiAJS8wjDsC8n80mr63cqCOOLEz8MtGbGzxNRYz5cJO+RHzNjD4Va4uqU2126Wb2U0e3pckkJeYsmE5D9jnWe2RDFbwDP2riCggffGg/Y+e+ccgN6O5piDlwHlHwH/ufCWcsmZpdHDcZvlcpeMmX9a4ikFjn/QwLprHCN43KDTsA+qQ5f6gJmcf1jcWJWBleu+W5ww7A2P2YjuGBvDo/RJUq0SRwZ+63fMblHEVuUxZUQFsT11aAo6kgoqT02eKiGUEg1SrLOgsjJONjwtEKdOGLYSbSTfPo5QwQvCfdtn8aJMyazITD3NO5dHNMje1wn+70XJgjfDQ/t7YhLtmoejQ9wocEjAmKeIhSMCaB9TBG1AIzYGKExgT43Yj1NTUBuAtN31NMH5ob37aPz6XYCb/OUMUayB5NRg=="},{"n":2,"title":null,"hash":3188322788979772,"content":"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","plain":false,"key":"52x17f3uGrdQtZm6nGnNZm0PbH/BZ9FkuUDEYHp3q0glNR7MkTT5uLy7LDyA14Wlnqg4JsRubXjP1nmdfqCyzf7V1lFAL9Xc9W/WDTXmivOHStU4SjMB6rte+uAzEwI170Y5mfIbGyuUFkE7P8sBxvvLKTiWVyO7Igh4kH09m6pYkOJd0HB57l5oNg9HS9SvEKsLJM1+1LXPfDOjCZTOIgw5OgMenKhUUXhB/e1eqNlvdxcnKwoFYpPYK6TVgpbk2R7vZuV3kuqZU/JC58Byl+30L5DtmBl93HH86tNsq9+21oLyXCM2KPcURLFIpcQvWkTf78rxEpCVDsNT2x5dlSeRiFld6baCw8IF1eNMpktMRAYIC7LYvOPrAGiuXgwEdwY7Kq+JFQgCMsamVQuAu0vhh2eIwQEm0XnSKYP0F8MRqlj17SThc8U7jIgrqLuwKDFPhXxXKe0YGO9LdXVntmcrAkusoHJiDorYsQmKt2/LrDawu4JT8Ufol3/8RI5GGpL2zu8I1lgr3TnRV3zcJc36UuNJFmIf91+CiW9agW+Z74MP55RpfBbkoLyaMSYSc2dfsH/Jp1znc6dManVbHyzwqdMGPw0dZlwk3RNq3Yd7nN/aND+icF2w9IWXszdYFzsxgtfPZehhvnu4IwQIQe/hBPvSd60m8IhLUNHqbMLBRI4F0/TPuZtUM8UFmNhUv8pbRXbFYnfkZbVxCWCM29vJIbcUjTkDMpFxaxjbxmpFR6hsGUPy+aCRHE2mvs6VcI5iA3BejNJC9wjwjBVWZo3Swp0gFEppbfTnQyb468bB8GF153ddaUuoDhwqphn3QPc+QumSzY1bj+vh/+/8SxaewSEWmdDHWmLqoyXRZV8vQfrZ20F6C6Na625fDx8w/nxW0e5BBkKrWrOjbCe5KG4uQvlUgKCmRdvD0cy9v3m1E14qpMbcPrJ+5rgfO6jqpi664NeRp09k2HoWh/gTrB8B8HyCsIPoLiW3QzrZD8exr8cCMcCGJhx2QK0TBLQyxKCoNAouQDGLNHfWQZGndLm9SNlqYNu7DfC92w1LinchAzqx9vh9RFtmrfex1N+0h2RaWZu+5qrfZYsB4js+jDkuKoGqX6ujpr2E1ys9IaOxANi27EW1UFDKT76NFl1HeVwViiOwy1bCgh8GQwHAA67y71Q7soU9crkGF5YG6EtWcohnbQSO6kh+NCn5ePu1tPa44+ZGkhYf1JhKCqJlVc/wTaJNfgieXRARF3oeQNXcT/Ua+3JQPBYtLaY="},{"n":3,"title":null,"hash":7048013514585406,"content":"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","plain":false,"key":"qtneUlRCTRzH5c/x0HEYvmOd6cpi+42U7v0uxbrnyYqP0k4VWV8pN8B4ECvuXFEaqlMedvnSh1YIJe7Q6RfiA5i64VB1k+1ZjyIVqaqUsOFtq4kPUGZNjCxFPkcBxTJas4cR2FQmR5rJ7dsSG1CZXbcPOT2CEIzoB33a/DRRt67sFPK640wcpu4McApio/KXyn8V9re3Ad2bFeBx4yGVSB/dMgMPTm39YDOGlbIlXTEifIUyZILZCYZk9M2v4XK0Zh32o+4fsaOyZ+t+CtGWNp8p+C7Rs8nCHjaIfjsxOayFHXSyEAorOLrDCqxhPRDcA8uD0sNQtuVt8Ila1/B3AYb90srAiY0MS+4pfL5nErO2k/wsMxXn+WHHGR9RJRwTULO7zMR4i65SI1oL6pQWzY5IXFE+OK6EwJkWCX+6b25bhy+DdlR+EjJTMW2zmVKZ/DXBLVyxqJBX52n1lyT7q6lDPCY++ij61Gd2p/rXHAobRNSK/cz1M8iW5sUolWqSuTdfOqhyzHgB1SnmXzJ8gmOnL2Wn0sSILb2zPKTwjzcJwzNXjCrPyKW+5C8WgC9fsLNuVN5rt0/Fcob2yEQUHPhu00xHsoZ3T8FP1Jv9sDTX9Bowa5FOwPKlpUjH+/rgZhgZRu/D2R3oWSejWjni7Z3dQb4LG9T7+o2SHRTOWzOnRrR1ZJtFpty9Os4yFtvYa2+jfWInr0zz8qYOyZLuCKVveFOA5yneGftvZ3ANL20="},{"n":4,"title":null,"hash":7998323414237409,"content":"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","plain":false,"key":"YwxBUHHmQVqxoPPNY0Ktin+bNHj7i8Gm9apICKdySo19sz8Zmu/gCqpPZiPTgCkp99c12RXTt8bugqKNaxiEC5UWD3hapHPUZ9E3W/kJYi9qZ00kHPccuP/5BJ/E0Je+2ER84TRoGW7ew+RanM0HLgNCB4tmjJDdCB8yy/OtJ21EDcg/Dq9dnQLR7mEwOUa5tvf9nsyMW8OakiWLu7MKf+Q+jOzaFJq5YRlEYur/2GSi8WugCVuY4MYnwwhjuf/ErWVhREJnolVm8XBGIEzqayppyXwjl5SAY3l1D74Mfp9up7v3KJOHnmhiE0MI+7FTKhB4CsFkt88cxfnmwI4E0YtPQRYNwQv+SqvoiuAc+HJDvSBDcjU7H7CnZOk2ud4mUFlnVqX3dGDr+0XFAgB5L2uRQDcDhsvZGufElq6RwrTJV1LprB3UAIrmJqSxT0opUX6C1jsigRmk4YNSYwCsMJeeOzYNI7Qgf41PhQ4byagSz9tJ8avme47Fn4S576yFm5mj8FAGqXRmARznKZUPVNBE7rvHDL74knT8OMf/YunHCLdJS6mxR4Z9KuPdrq0K8eG1UPgScwapxY5yYADKvWLPMqUDqDC9nEXroStNyGutyiWOId5OLXivlg4BjYfTEjcZ9R1z3a8xv5yGwpU+aoKP+RdrgpVZFpcKgvoph4/BeOC1N8jqc6uN0t6UA8L5erJqXAgfOB5fW2RgYoQrgyJjEiuOxIaFu+HwKKiyFBnlt77DfrtSYvSl92h9qrl5tmtmei7bTqNzHxzHUsuK5w9uuJjwzqO8NuBzowpH30WPv0uO7UlKat22Udc84g6nL2hx7W/8+8zQHbAXmez1wIPXMhjBIdZdXxhU6JJ1LyHNZ4zdsXaQI0KrAFWNXh7+4j2PEpasFxCsUOR0CU3J3MHlYYFq0tRhxmIZmBZTsf8sLbtxIKRl9JJ6wpNyIYarWmYsqysZrUDNqGRNMaQY6+2L2R6lxr1t8tpVrjolFfS2aUIMfWLln7fK/fK8050NUFcWHA=="},{"n":5,"title":null,"hash":6763552294323379,"content":"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","plain":false,"key":"6Hat6RpOlOsI9WpTnJmxQMYHnr4oH4ttWbmG2JpP2+4T8NBVcSYqnBiRGrLqDcYVIA/4VmzqkeJKidLmpx/iCNp5UTCXIHtGX/UBqFjecS2E08zZQ6fZDk6tm4DwUre3V4Q7yf3iM0ofaaHQl2hgkuwcRj+zd6Z/h6qW71DQyx8wKVeLrZ60O8VAkhDg5txghKJrqdLImXkOOGm/FtesLmtXlm5u95zeRqwcOtk/IwC6IDWrnE1KzfDCAmP/ZJtLAXyA9hg7QJPS+GQFOx2uPeiM4iAXtGPKWJoOprSUwsyjNmMqUeQyXW6Fgf3r1y069tVcicrQB3shD5Ji3ZgTri+HG+Y4x2GKcDpoz2aHGhSw6X3ZLozUjB9mEK8X6pc85mPC0eHhi03LKOz43MbV6aVgWENjQTv/e8AUXDUaGPtx4PPqzqP6qQQbF4fNKWqkWoNRvvgQ3vLJUAN06y1/6rRLtJWImkJ1TippIYJnuBZdatOuWkD9cDJMXp4LPVaQQu6kBD9rOizge9SW7TNNRAhp/1whcGdWUWG8WVteEvVcvrvq5D/FGIggNvffq/FDvMsNfAbCPEbz806ENeltrF/eX28S7W9LQdsR9VlGUDrRrSqMvd1OYWXfWx9IH/Fe1tZ5JtuNy4RsE3wmI3i1jF+6G69utI+VDs6ofDcCVmDYIolvWfUhpy3sO2u1NysvOTCamvDpZ4neKRNZXG1qIE7ghZyW5OX37ihv1iOG0gyaKmB3hh/d3hd6hKQI3TAl1ZnWd3uBulG+e/j23HW8etAdz82/Je3fqAp6OzjpTJNJshdhOzG4zM9tWlTEQyT4H8edjou5Tf+vXsa+cVg0fITNO9r/8evm+UyaD6oe0/tZfW3WiFuwjh+N3qZA0sXUYqqq4hhsIpNjac9em8ABXsPpHJIF/GcMQuPM8GnR2q3VHt13lE3HWhn8Nvo63P4bFCadPAf4iLKyUoE4losZfBSZ7RWNX8YLZbLcSartJhp0+7OSy/zWYatwAHCflVbGg853CC50u6hplDt98Z1Nt5QzCpmYGrTB8xG4XDuVAY9d5cd27xGDRBg13GqIG1VHPGJomsqIBLTgACcrNdunhRSd86MsPzlECDIMZjbrot2pOdiDdKzoUG53OMidfXk1per1I/CExxNkDyFu7BC6FlLCktO+JD038KSJhuuQxHD0FB3FhpP1laHdkzjqr3F6/+CEe9LYnDEdELiWcdcr"},{"n":6,"title":null,"hash":3402572301761849,"content":"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","plain":false,"key":"AykbvTZzj7eFQcBdiRMUawVCcKPSZVa98UR2MX9X4c7uHPAtqfoVg2dlAqElcNlMvnKnwgQD78O9Ml96/GVYCIBMA2ORAFDNJ83neUspAbv0uukYHTQNTiVSxs6cLl+F9psOl8C3hKdGYev+L6e1znQe0nXsJd3EEjep/PFZgC8/40DlDck8PljyDt2LBlksykT48uF++df2RMOnZa3oqnMtbhybdmulonCbKemMUSz3DPlpvFY+9it4KXf3BtpVQOR3XL9KlX/YPyXADH8JhXvjapLTUHJQYVvJx21M4yedaeVEeGDIakENrWt507hbb8/05Vp24qtWUUIl1UKDqj0g1QgXP3yA4ByfHcO92UxeFWiagyFgFJ5dXxnze+1a+HwRnmU4sSi5+Zox/fioMhf1Exn9QCl9rrin18/IXv5PU6MMaI7hdB4I1fOO9xWqBg0xgUGZygYM9vjR7bZVBFKfroo3XaaNKpBKw17a23nFc8G820CPERpDX3884fNTd7Z8mT6OUzvDFV9aBtXcW280CHnCsIurwb0a5KeZZNbkDrUfAZsarjf/Lyz+pDHq+oPzQvUNKW6DR0yniSBkvCYY7OJ2ekx2Oc02cdiEDHIVfyk2k910zI7NjUCZJCUESRlQC1KOlmXgAyRv13PPUy8KuujI+t6rj05IE7o8rgBJsC/XCNQlTraSI+XP7A++zvS9xvf9ESehHfsWmL1zBqTyz3HCFVp5yI+ogIpqJDxYkbcwCMl6rSL3fNv2nTXrjENZSHvWl1SzHR3B7Dz24sw0kJtiGoYS42E73BV2q+R5rJEsd1ChaDmJAOEP0AKmZJDLP9RuG8+9UCL7xuL/51MqkEF6aQNsibZfoZNSBYXmRZ+MgSX6gBMri5bwDmMS9CuQZOvcz6oC4xMbmhN9rEtmIXaitSqU7mGpoViHRmJrCHhrHseWmXT5zf244utjgGOL4LwRnFMWcTz/b+Fd2wqP7omZdy3HZ38cSmuXzYubSB+YowV78pGuLszJlBFdal7kIHArEbULV4d8YpcUCLoSjc0q8paRGJTVU/m151uXtQU4f85QcyMSrArEgP2senom/9+DE02vyhA3eAziHfLj9zh1CUdHI+cBXh6kDaF2bO+czpxd6wYzm+T9A/fBbfnegpQ3L6pvU9HIxzyyrQlREEr2y3lAGIJcm1if+YMPXUB7PHlNFEh7RHBCnFozk5iCpGj7lsVPm+CNngRkSherNPrahqllmu7+X/NrbDnh6qkAHxrv1s0c86X+Gu7CNZrDPm/9WRmijTQK5K6oBawkqO4rGfJS48XOFAiHfxvgGhpddDGW7PUeD7f554KkShZcSUhKTzU6Qo7KJRR1gztaBrWzsg=="}],"finalHash":6853752066935317,"finalEnc":"EZLqnfyRNf8li6IPUAIa9vVBhJN0xDPk24BzBIEfeUDLFNZCF5OjSscUcKrYRAjKZsPnrxaGS7RjndVtahGMuqNXgqaqO6PwhexeopGawbgTlSv/xD5YooSJUTd2ygq2SUSq0QHs0jpP5sdBr1Tt25v7YNG7GHOW5zKDWLxu8KjBlTrGCuL9R/m7j9MOVHxmPh1sfsli8Bg=","salt":"n154-bennett"};
+(function () {
+  function cyrb53(str, seed) {
+    seed = seed || 0; var h1 = 0xdeadbeef ^ seed, h2 = 0x41c6ce57 ^ seed;
+    for (var i = 0; i < str.length; i++) { var ch = str.charCodeAt(i); h1 = Math.imul(h1 ^ ch, 2654435761); h2 = Math.imul(h2 ^ ch, 1597334677); }
+    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507); h1 ^= Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507); h2 ^= Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+    return 4294967296 * (2097151 & h2) + (h1 >>> 0);
+  }
+  function stream(key, n) {
+    var out = new Uint8Array(n), s = cyrb53(key + DATA.salt + 'k', 7) >>> 0;
+    for (var i = 0; i < n; i++) { s ^= s << 13; s >>>= 0; s ^= s >>> 17; s ^= s << 5; s >>>= 0; out[i] = s & 255; }
+    return out;
+  }
+  function dec(b64, key) {
+    var bin = atob(b64), b = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) b[i] = bin.charCodeAt(i);
+    var k = stream(key, b.length); for (var j = 0; j < b.length; j++) b[j] ^= k[j];
+    return JSON.parse(new TextDecoder().decode(b));
+  }
+  var HOWTO = {
+    'Select all': '<b>ADD</b> the numbers of every correct answer and write the total. Example: if 2, 3, and 6 are correct, write <b>11</b>.',
+    'Choose one': 'Write the <b>one</b> number of the best answer.',
+    'Put in order': '<b>Do not add.</b> Write the option numbers side by side in the correct order, first to last. Example: <b>3142</b>.',
+    'Match each row': '<b>Do not add.</b> Write the number you chose for each row, in row order (a, b, c\u2026), side by side. Example: <b>3142</b>.'
+  };
+  var digits = function (s) { return String(s).replace(/\D/g, ''); };
+  var esc = function (s) { var d = document.createElement('div'); d.textContent = s; return d.innerHTML; };
+
+  // state
+  var STORE = 'n154-escape-v2', solved = [];
+  try { solved = JSON.parse(localStorage.getItem(STORE) || '[]'); } catch (e) { solved = []; }
+  function save() { try { localStorage.setItem(STORE, JSON.stringify(solved)); } catch (e) {} }
+  var rooms = DATA.rooms, contents = [], keys = [], finalData = null, view = 0;
+
+  function unlockChain() {
+    contents = [rooms[0].content]; keys = [];
+    for (var i = 0; i < solved.length && i < rooms.length; i++) {
+      var code = solved[i];
+      if (cyrb53(code + DATA.salt) !== rooms[i].hash) { solved = solved.slice(0, i); break; }
+      keys[i] = dec(rooms[i].key, code);
+      if (i + 1 < rooms.length) contents[i + 1] = dec(rooms[i + 1].content, code);
+    }
+    if (solved[rooms.length] && cyrb53(solved[rooms.length] + DATA.salt) === DATA.finalHash) finalData = dec(DATA.finalEnc, solved[rooms.length]);
+    else if (solved.length > rooms.length) solved = solved.slice(0, rooms.length);
+  }
+
+  // intro
+  var I = DATA.intro;
+  document.getElementById('title').textContent = I.title;
+  document.getElementById('sub').textContent = I.sub;
+  document.getElementById('mission').textContent = I.mission;
+  document.getElementById('family').innerHTML = I.family.map(function (f) { return '<tr><td><b>' + esc(f[0]) + '</b></td><td>' + esc(f[1]) + '</td><td>' + esc(f[2]) + '</td></tr>'; }).join('');
+  document.getElementById('how').innerHTML = I.how.map(function (h) { return '<div><b>' + esc(h[0]) + '</b>' + esc(h[1]) + '</div>'; }).join('');
+
+  function renderDoors() {
+    var html = rooms.map(function (r, i) {
+      var c = contents[i], done = i < solved.length, open = !!c;
+      var cls = 'door' + (done ? ' done' : open ? ' open' : '') + (view === i ? ' current' : '');
+      var label = c ? 'Room ' + (i + 1) + '<br>' + esc(c.title) : 'Room ' + (i + 1) + '<br>Locked';
+      var icon = done ? '✅' : c ? c.icon : '🔒';
+      return '<div class="' + cls + '" ' + (open ? 'role="button" tabindex="0" data-i="' + i + '"' : 'aria-disabled="true"') + '><span class="ic" aria-hidden="true">' + icon + '</span>' + label + '</div>';
+    }).join('');
+    var fOpen = solved.length >= rooms.length;
+    html += '<div class="door' + (finalData ? ' done' : fOpen ? ' open' : '') + (view === rooms.length ? ' current' : '') + '" ' + (fOpen ? 'role="button" tabindex="0" data-i="' + rooms.length + '"' : 'aria-disabled="true"') + '><span class="ic" aria-hidden="true">' + (finalData ? '🎉' : fOpen ? '🚪' : '🔒') + '</span>Final<br>door</div>';
+    var nav = document.getElementById('doors'); nav.innerHTML = html;
+    Array.prototype.forEach.call(nav.querySelectorAll('[data-i]'), function (el) {
+      var go = function () { view = +el.getAttribute('data-i'); render(); window.scrollTo({ top: nav.offsetTop - 10, behavior: 'smooth' }); };
+      el.addEventListener('click', go);
+      el.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
+    });
+  }
+
+  function puzzleHTML(p) {
+    var h = '<div class="puzzle"><p><span class="tag">' + esc(p.kind) + '</span><span class="pid">Puzzle ' + esc(p.id) + '.</span> ' + esc(p.prompt) + '</p><p class="howto">' + HOWTO[p.kind] + '</p>';
+    if (p.options) {
+      h += '<ol class="opts">' + p.options.map(function (o, k) { return '<li tabindex="0" role="checkbox" aria-checked="false"><span class="num">' + (k + 1) + '</span><span>' + esc(o) + '</span></li>'; }).join('') + '</ol>';
+    }
+    if (p.rows) {
+      h += '<div class="keyline"><b>Key:</b> ' + esc(p.keyLine) + '</div><table class="rows"><thead><tr><th>Row</th><th>Situation</th><th>#</th></tr></thead><tbody>' +
+        p.rows.map(function (r, k) { return '<tr><td><b>' + 'abcdefgh'[k] + '</b></td><td>' + esc(r) + '</td><td class="inp"><input inputmode="numeric" maxlength="1" aria-label="Number for row ' + 'abcdefgh'[k] + '"></td></tr>'; }).join('') + '</tbody></table>';
+    }
+    return h + '</div>';
+  }
+
+  function debriefHTML(i, openIt) {
+    var k = keys[i] && keys[i].rows; if (!k) return '';
+    return '<details class="debrief"' + (openIt ? ' open' : '') + '><summary>Room ' + (i + 1) + ' rationales</summary><table><thead><tr><th>Puzzle</th><th>Answer</th><th>Why</th></tr></thead><tbody>' +
+      k.map(function (r) { return '<tr><td><b>' + esc(r[0]) + '</b></td><td>' + esc(r[1]) + '</td><td>' + esc(r[2]) + '</td></tr>'; }).join('') + '</tbody></table></details>';
+  }
+
+  function render() {
+    renderDoors();
+    var main = document.getElementById('room');
+    if (view === rooms.length) return renderFinal(main);
+    var c = contents[view], done = view < solved.length;
+    var h = '<section class="card"><h2>' + c.icon + ' Room ' + c.n + ': ' + esc(c.title) + '</h2><div class="scene">' + esc(c.scene) + '</div>';
+    h += c.puzzles.map(puzzleHTML).join('');
+    if (done) {
+      h += '<div class="msg good">Unlocked with code ' + esc(formatShape(solved[view], c.codeShape)) + '. Your key letter is <span class="letter">' + esc(keys[view].letter) + '</span></div>' + debriefHTML(view, true);
+      h += '<p style="margin-top:14px"><button type="button" id="next">' + (view + 1 < rooms.length ? 'Go to Room ' + (view + 2) + ' →' : 'Go to the final door →') + '</button></p>';
+    } else {
+      h += '<div class="lock"><label for="code">Room ' + c.n + ' code <span style="font-weight:400;color:var(--muted)">(format ' + esc(c.codeShape) + ')</span></label>' +
+        '<p class="howto">Room code = ' + c.puzzles.map(function (p) { return p.id; }).join(' \u2013 ') + ', with a dash between each answer.</p><div class="row"><input id="code" autocomplete="off" placeholder="' + esc(c.codeShape) + '"><button type="button" id="try">Unlock</button><button type="button" class="ghost" id="hintBtn">Need a hint?</button></div><div id="out" aria-live="polite"></div><div id="hintBox"></div></div>';
+    }
+    h += '</section>';
+    main.innerHTML = h;
+    Array.prototype.forEach.call(main.querySelectorAll('ol.opts li'), function (li) {
+      var t = function () { var on = li.classList.toggle('marked'); li.setAttribute('aria-checked', on); };
+      li.addEventListener('click', t);
+      li.addEventListener('keydown', function (e) { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); t(); } });
+    });
+    if (done) { document.getElementById('next').onclick = function () { view++; render(); }; return; }
+    var inp = document.getElementById('code');
+    var attempt = function () {
+      var d = digits(inp.value), out = document.getElementById('out');
+      if (!d) { out.innerHTML = '<div class="msg bad">Enter your code first.</div>'; return; }
+      if (cyrb53(d + DATA.salt) === rooms[view].hash) {
+        solved[view] = d; save(); unlockChain(); render();
+      } else {
+        out.innerHTML = '<div class="msg bad">Not yet. Check each puzzle again. One wrong answer changes the whole code.</div>';
+      }
+    };
+    document.getElementById('try').onclick = attempt;
+    inp.addEventListener('keydown', function (e) { if (e.key === 'Enter') attempt(); });
+    document.getElementById('hintBtn').onclick = function () { document.getElementById('hintBox').innerHTML = '<div class="hint"><b>Hint:</b> ' + esc(c.hint) + '</div>'; };
+  }
+
+  function formatShape(d, shape) { var i = 0; return shape.replace(/_/g, function () { return d[i++] || ''; }); }
+
+  function renderFinal(main) {
+        var h = '<section class="card final"><h2>🚪 The final door</h2>';
+    if (finalData) {
+      var when = new Date().toLocaleString();
+      h += '<div class="big" aria-hidden="true">🎉</div><h2>' + esc(finalData.title) + '</h2><p>' + esc(finalData.body) + '</p><div class="stamp">NURSE 154 Escape Room · Completed · ' + esc(when) + '</div>';
+      h += '<div style="text-align:left">' + rooms.map(function (r, i) { return debriefHTML(i, false); }).join('') + '</div>';
+    } else {
+      var ring = rooms.map(function (r, i) { return '<span class="slot">' + (keys[i] ? esc(keys[i].letter) : '?') + '<small>Room ' + (i + 1) + '</small></span>'; }).join('');
+      h += '<p>You collected one key letter from each room. Here they are, in room order. Type them as one word to open the front door.</p><div class="ring">' + ring + '</div>' +
+        '<div class="lock" style="text-align:left"><label for="fcode">Final password</label><div class="row"><input id="fcode" autocomplete="off" placeholder="6 letters"><button type="button" id="ftry">Open the door</button></div><div id="fout" aria-live="polite"></div></div>';
+    }
+    main.innerHTML = h + '</section>';
+    if (finalData) return;
+    var f = document.getElementById('fcode');
+    var go = function () {
+      var d = f.value.replace(/[^a-z]/gi, '').toUpperCase();
+      if (cyrb53(d + DATA.salt) === DATA.finalHash) { solved[rooms.length] = d; save(); unlockChain(); render(); }
+      else document.getElementById('fout').innerHTML = '<div class="msg bad">Not yet. Type the six key letters in room order as one word.</div>';
+    };
+    document.getElementById('ftry').onclick = go;
+    f.addEventListener('keydown', function (e) { if (e.key === 'Enter') go(); });
+  }
+
+  document.getElementById('reset').onclick = function () {
+    solved = []; save(); unlockChain(); view = 0; render();
+  };
+
+  unlockChain();
+  view = Math.min(solved.length, rooms.length);
+  render();
+})();
+</script>
+</body>
+</html>
